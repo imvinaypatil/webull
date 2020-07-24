@@ -155,7 +155,7 @@ class StreamConn:
                 self.client_order_upd.subscribe(json.dumps(say_hello))
                 #time.sleep(5)
 
-            self.client_streaming_quotes = mqtt.Client(client_id=did, transport='websockets')
+            self.client_streaming_quotes = mqtt.Client(client_id=did, transport='websockets', clean_session=True)
             self.client_streaming_quotes.on_connect = on_connect
             self.client_streaming_quotes.on_subscribe = on_subscribe
             self.client_streaming_quotes.on_unsubscribe = on_unsubscribe
