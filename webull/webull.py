@@ -750,7 +750,7 @@ class webull:
         params = {'currentNewsId': Id, 'pageSize': items}
         return requests.get(self._urls.news(self.get_ticker(stock)), params=params).json()
 
-    def get_bars(self, stock=None, tId = None, interval='m1', count=1, extendTrading=0, timeStamp=None):
+    def get_bars(self, stock=None, tId = None, interval='m1', count=1, extendTrading=0, timestamp=None):
         '''
         get bars returns a pandas dataframe
         params:
@@ -766,7 +766,7 @@ class webull:
         else:
             raise ValueError('Must provide a stock symbol or a stock id')
 
-        params = {'type': interval, 'count': count, 'extendTrading': extendTrading, 'timestamp': timeStamp}
+        params = {'type': interval, 'count': count, 'extendTrading': extendTrading, 'timestamp': timestamp}
         df = DataFrame(columns=['open', 'high', 'low', 'close', 'volume', 'vwap'])
         df.index.name = 'timestamp'
         response = requests.get(self._urls.bars(tId), params=params)
