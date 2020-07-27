@@ -193,7 +193,7 @@ class StreamConn:
         self.client_streaming_quotes.subscribe('{' + f'"tickerIds":[{tId}],"type":"{level}"' + '}')
         self.client_streaming_quotes.loop()
         if tId not in self.subscriptions:
-            self.subscriptions[tId] = {}
+            self.subscriptions[tId] = set
         self.subscriptions[tId].add(level)
 
     def unsubscribe(self, tId=None, level=105):
