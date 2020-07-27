@@ -204,11 +204,10 @@ class StreamConn:
             self.subscriptions[tId].remove(level)
 
     def resubscribe(self):
-        for subscription in self.subscriptions:
-            for tId in subscription:
-                for level in subscription[tId]:
-                    self.client_streaming_quotes.subscribe('{' + f'"tickerIds":[{tId}],"type":"{level}"' + '}')
-                    self.client_streaming_quotes.loop()
+        for tId in self.subscriptions:
+            for level in self.subscriptions[tId]:
+                self.client_streaming_quotes.subscribe('{' + f'"tickerIds":[{tId}],"type":"{level}"' + '}')
+                self.client_streaming_quotes.loop()
 
 if __name__ == '__main__':
     webull = webull(cmd=True)
