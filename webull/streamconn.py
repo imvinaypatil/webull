@@ -1,3 +1,6 @@
+import os
+import time
+
 import paho.mqtt.client as mqtt
 import threading
 import json
@@ -213,20 +216,20 @@ if __name__ == '__main__':
     webull = webull(cmd=True)
 
     # for demo purpose
-    webull.login('xxxxxx@xxxx.com', 'xxxxx')
-    webull.get_trade_token('xxxxxx')
+    webull.login('test@test.com', 'pa$$w0rd')
+    # webull.get_trade_token('xxxxxx')
     # set self.account_id first
-    webull.get_account_id()
+    # webull.get_account_id()
     # webull.place_order('NKTR', 21.0, 1)
-    orders = webull.get_current_orders()
-    for order in orders:
-        # print(order)
-        webull.cancel_order(order['orderId'])
+    # orders = webull.get_current_orders()
+    # for order in orders:
+    #     # print(order)
+    #     webull.cancel_order(order['orderId'])
     # print(webull.get_serial_id())
     # print(webull.get_ticker('BABA'))
 
     # test streaming
-    nyc = timezone('America/New_York')
+    # nyc = timezone('America/New_York')
 
 
     def on_price_message(topic, data):
@@ -236,10 +239,11 @@ if __name__ == '__main__':
         if 'tradeTime' in data:
             print(', tradeTime: ', data['tradeTime'])
         else:
-            tradetime = data['deal']['tradeTime']
-            current_dt = datetime.today().astimezone(nyc)
-            ts = current_dt.replace(hour=int(tradetime[:2]), minute=int(tradetime[3:5]), second=0, microsecond=0)
-            print(', tradeTime: ', ts)
+            pass
+            # tradetime = data['deal']['tradeTime']
+            # current_dt = datetime.today().astimezone(nyc)
+            # ts = current_dt.replace(hour=int(tradetime[:2]), minute=int(tradetime[3:5]), second=0, microsecond=0)
+            # print(', tradeTime: ', ts)
 
 
     def on_order_message(topic, data):
