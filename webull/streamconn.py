@@ -195,7 +195,7 @@ class StreamConn:
         if tId not in self.subscriptions:
             self.subscriptions[tId] = []
         if level not in self.subscriptions[tId]:
-            self.subscriptions[tId].add(level)
+            self.subscriptions[tId].append(level)
 
     def unsubscribe(self, tId=None, level=105):
         self.client_streaming_quotes.unsubscribe(f'["type={level}&tid={tId}"]')
