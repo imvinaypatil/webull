@@ -194,19 +194,19 @@ class StreamConn:
         self.client_streaming_quotes.loop()
         if tId not in self.subscriptions:
             self.subscriptions[tId] = set
-        self.subscriptions[tId].add(level)
+        self.subscriptions[tId].add(str(level))
 
     def unsubscribe(self, tId=None, level=105):
         self.client_streaming_quotes.unsubscribe(f'["type={level}&tid={tId}"]')
         # self.client_streaming_quotes.loop() #no need for this, you should already be in a loop
         if tId in self.subscriptions and level in self.subscriptions[tId]:
-            self.subscriptions[tId].remove(level)
+            self.subscriptions[tId].remove(str(level))
 
     def resubscribe(self):
         for subscription in self.subscriptions:
             for tId in subscription:
                 for level in subscription[tId]:
-                    self.client_streaming_quotes.subscribe('{' + f'"tickerIds":[{tId}],"type":"{level}"' + '}')
+                    self.client_streaming_quotes.subscribe('{' + f'"tickerIds":[{tId}],"type":"{int(level)}"' + '}')
                     self.client_streaming_quotes.loop()
 
 if __name__ == '__main__':
