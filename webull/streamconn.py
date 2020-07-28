@@ -19,8 +19,6 @@ class StreamConn:
         self.client_order_upd = None
         self.client_streaming_quotes = None
 
-        self.subscriptions = {}  # tId: ["topicId"]
-
     """
     ====Order status from platpush====
     topic _______: messageId, action, type, title, messageHeaders{popstatus, popvalidtime},
@@ -195,22 +193,11 @@ class StreamConn:
         # you can only use curly brackets for variables in a f string
         self.client_streaming_quotes.subscribe('{' + f'"tickerIds":[{tId}],"type":"{level}"' + '}')
         self.client_streaming_quotes.loop()
-        if tId not in self.subscriptions:
-            self.subscriptions[tId] = []
-        if level not in self.subscriptions[tId]:
-            self.subscriptions[tId].append(level)
 
     def unsubscribe(self, tId=None, level=105):
         self.client_streaming_quotes.unsubscribe(f'["type={level}&tid={tId}"]')
         # self.client_streaming_quotes.loop() #no need for this, you should already be in a loop
-        if tId in self.subscriptions and level in self.subscriptions[tId]:
-            self.subscriptions[tId].remove(level)
 
-    def resubscribe(self):
-        for tId in self.subscriptions:
-            for level in self.subscriptions[tId]:
-                self.client_streaming_quotes.subscribe('{' + f'"tickerIds":[{tId}],"type":"{level}"' + '}')
-                self.client_streaming_quotes.loop()
 
 if __name__ == '__main__':
     webull = webull(cmd=True)
