@@ -268,8 +268,8 @@ class webull:
             if len(result['list']) == 0:
                 raise ValueError('TickerId could not be found for stock {}'.format(stock))
             elif result['list']:
-                for item in result['list']:  # implies multiple tickers, but only assigns last one?
-                    ticker_id = item['tickerId']
+                item = result['list'][0]
+                ticker_id = item['tickerId']  # implies multiple tickers, but only assigns first one?
         else:
             raise ValueError('Stock symbol is required')
         return ticker_id
