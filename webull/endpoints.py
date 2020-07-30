@@ -1,5 +1,5 @@
-class urls :
-    def __init__(self) :
+class urls:
+    def __init__(self):
         self.base_info_url = 'https://infoapi.webull.com/api'
         self.base_options_url = 'https://quoteapi.webullbroker.com/api'
         self.base_options_gw_url = 'https://quotes-gw.webullbroker.com/api'
@@ -141,3 +141,6 @@ class urls :
 
     def social_home(self, topic, num=100):
         return f'{self.base_user_url}/social/feed/topic/{topic}/home?size={num}'
+
+    def portfolio_lists(self):
+        return f'{self.base_options_gw_url}/personal/portfolio/v2/check'
